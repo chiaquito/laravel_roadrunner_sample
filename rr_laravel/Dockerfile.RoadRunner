@@ -1,0 +1,21 @@
+FROM php:8.4-apache
+
+EXPOSE 80 8000
+WORKDIR /var/www
+
+
+RUN apt-get update && \
+    apt-get install -y zip && \
+    docker-php-ext-install sockets pcntl
+
+
+COPY ./php.ini-development /usr/local/etc/php/php.ini
+COPY ./httpd.conf /etc/apache2/sites-available/000-default.conf
+COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
+RUN a2enmod rewrite
+
+COPY ./project/ /var/www/
+RUN php artisan octane:install --server=roadrunner
+
+# https://laravel.com/docs/12.x/octane#roadrunner
+CMD ["/bin/sh", "-c", "php artisan octane:start --server=roadrunner --host=0.0.0.0"]

@@ -1,3 +1,4 @@
+### learning how to use PHP in docker container 
 cd hello_docker_php
 docker build -f Dockerfile -t hello_docker_php .
 docker run -p 80:80 hello_docker_php

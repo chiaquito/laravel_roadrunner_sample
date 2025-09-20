@@ -1,3 +1,5 @@
+### how to run
+ 
 # https://docs.roadrunner.dev/docs/php-worker/worker
 
 cd rr_simple_script
